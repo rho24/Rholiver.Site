@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Rholiver.Site.Models.BlogPost>
+
+@{
+    ViewBag.Title = "Fake Blog";
+}
+
+<h2>Fake Blog</h2>
+
+<p>This is a fake blog to test things!</p>
+
+<section class="blog">
+@foreach (var post in Model)
+{
+  <article>
+    <h3>@post.Title</h3>
+    <div class="content">
+    @post.Content
+    </div>
+    <div class="stats">Created at @post.Created</div>
+  </article>
+}
+</section>

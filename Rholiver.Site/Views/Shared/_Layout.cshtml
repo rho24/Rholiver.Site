@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>@ViewBag.Title</title>
+  <title>rholiver.co.uk@(!string.IsNullOrWhiteSpace(@ViewBag.Title) ? " - " + @ViewBag.Title : "")</title>
   <link href="@Url.Content("~/Content/Mvc.css")" rel="stylesheet" type="text/css" />
   <link href="@Url.Content("~/Content/Site.less")" rel="stylesheet/less" type="text/css" />
   
@@ -18,6 +18,7 @@
     <nav>
       <ul>
         <li><a href="@Url.Action("Index", "Home", null)">Home</a></li>
+        <li><a href="@Url.Action("Index", "Blog", null)">Fake Blog</a></li>
         <li><a href="@Url.Action("About", "Home", null)">About</a></li>
       </ul>
     </nav>

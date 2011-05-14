@@ -73,10 +73,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\NinjectMVC3.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -145,7 +147,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Content Include="Views\Blog\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
