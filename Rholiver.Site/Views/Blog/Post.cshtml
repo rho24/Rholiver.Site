@@ -1,0 +1,15 @@
+﻿@model Rholiver.Site.Models.BlogPost
+@{
+  ViewBag.Title = "Blog - " + Model.Title;
+}
+
+<section class="post">
+  <header>
+    <h2>@Model.Title</h2>
+    Created by @Html.DisplayFor(m => m.CreatedBy) at @Html.DisplayFor(m => m.CreatedAt)
+  </header>
+
+  <section class="body">
+    @Model.Body
+  </section>
+</section>

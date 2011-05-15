@@ -1,25 +1,45 @@
-﻿body {
+﻿@site-fg-color: #232323;
+@site-bg-color: #928163;
+@focus-bg-color: #F7DDA0;
+
+@header-fg-color: #A53C1F;
+@header-bg-color: #A0B282;
+
+.box {
+  margin: 0.5em 0 0.5em;
+  padding: 1em;
+  border-radius: 1em;
+}
+
+body {
   margin: 0;
   padding: 0;
   font-size: .85em;
   font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
-  color: #232323;
-  background-color: #fff;
+  color: @site-fg-color;
+  background-color: @site-bg-color;
+}
+
+a {
+  color: @header-fg-color;
+}
+
+header a {
+  text-decoration: none;
 }
 
 body > header {
-  margin:0;
+  margin: 0;
   padding: 1em 2em 1em;
-  background-color: #EEE;
+  background-color: @header-bg-color;
   
   a {
-    text-decoration: none;
-    color: #232323;
+    color: @site-fg-color;
   }
   
   h1 {
     font-size: 2em;
-    color: Navy;
+    color: @header-fg-color;
   }
   
   nav {
@@ -32,10 +52,11 @@ body > header {
       
       li {
         display: inline-block;
+        .box;
         padding: 0 0.5em 0;
         margin-right: 0.5em;
-        background-color: Silver;
         border-radius: 0.3em;
+        background-color: @site-bg-color;
       }
     }
   }
@@ -47,21 +68,17 @@ body > footer {
   text-align: center;
 }
 
-body > section {
+body > .body {
   margin: 1em 2em 1em;
+  max-width: 800px;
 }
-
-
 
 /* BLOG */
 section.blog {
-  max-width: 800px;
   
   article {
-    margin: 0.5em 0 0.5em;
-    padding: 1em;
-    background-color: #ddd;
-    border-radius: 1em;
+    .box;
+    background-color: @focus-bg-color;
     
     h3 {
       margin: 0 0 1em;
@@ -71,5 +88,13 @@ section.blog {
       font-size: 0.8em;
       font-weight: bold;
     }
+  }
+}
+
+section.post {
+  
+  .body {
+    .box;
+    background-color: @focus-bg-color;
   }
 }

@@ -8,16 +8,13 @@ namespace Rholiver.Site.Models
 {
     public class BlogPost
     {
-        [Required]
         public string Id { get; set; }
-
-        [Required]
         public string Title { get; set; }
-
-        [Required]
-        public HtmlString Content { get; set; }
-
-        [Required]
-        public DateTime Created { get; set; }
+        public string Description { get; set; }
+        public HtmlString Body { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool IsPublished { get; set; }
+        public DateTime? PublishedAt { get; set; }
     }
 }
