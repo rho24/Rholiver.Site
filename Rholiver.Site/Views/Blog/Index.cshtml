@@ -7,6 +7,7 @@
 <h2>Blog</h2>
 
 <p>This is a fake blog to test things!</p>
+<p>@Html.ActionLink("Add new post", "CreatePost")</p>
 
 <section class="blog">
 @foreach (var post in Model)
@@ -17,6 +18,7 @@
     @post.Body
     </section>
     <section class="stats">Created at @post.CreatedAt</section>
+    @Html.ActionLink("Edit", "EditPost", @post.Id)
   </article>
 }
 </section>

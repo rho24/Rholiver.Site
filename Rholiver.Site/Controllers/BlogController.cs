@@ -4,30 +4,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Rholiver.Site.Models;
+using Rholiver.Site.Infrastructure;
 
 namespace Rholiver.Site.Controllers
 {
     public class BlogController : Controller
     {
-        public List<BlogPost> Blogs { get; set; }
+        public BlogRepository BlogRepo { get; set; }
 
-        public BlogController()
+        public BlogController(BlogRepository blogRepo)
         {
-            Blogs = new List<BlogPost>()
-            {
-                new BlogPost(){
-                    Id = "first-post",
-                    Title = "First post",
-                    Body = new HtmlString("<p>This is my first post!</p>"),
-                    CreatedAt = new DateTime(2011, 05, 14, 19, 42, 00)
-                },
-                new BlogPost(){
-                    Id = "second-post",
-                    Title = "Second post",
-                    Body = new HtmlString("<p>This is my second post.</p><p>Lets try <b>styling</b>.</p>"),
-                    CreatedAt = new DateTime(2011, 05, 14, 20, 01, 00)
-                }
-            };
+            BlogRepo = blogRepo;
         }
 
         //
@@ -35,12 +22,12 @@ namespace Rholiver.Site.Controllers
 
         public ActionResult Index()
         {
-            return View(Blogs.OrderByDescending(b => b.CreatedAt));
+            return View(BlogRepo.Posts.OrderByDescending(b => b.CreatedAt));
         }
 
         public ActionResult Post(string id)
         {
-            var blog = Blogs.Where(b => b.Id == id).FirstOrDefault();
+            var blog = BlogRepo.Posts.Where(p => p.Id == id).FirstOrDefault();
 
             if (blog == null)
                 return new HttpNotFoundResult();
@@ -48,5 +35,42 @@ namespace Rholiver.Site.Controllers
             return View(blog);
         }
 
+
+        public ActionResult CreatePost()
+        {
+            return View(new BlogPost());
+        }
+
+        [HttpPost]
+        public ActionResult CreatePost(BlogPost post)
+        {
+            if (post == null)
+                throw new ArgumentNullException("post");
+
+            if (string.IsNullOrWhiteSpace(post.Title))
+                throw new ArgumentNullException("post.Title");
+
+            if (BlogRepo.Posts.Where(p => p.Title == post.Title).FirstOrDefault() != null)
+                throw new ArgumentException("Post not unique");
+
+            post.Id = post.Title.Replace(" ", "-");
+
+            BlogRepo.Posts.Add(post);
+
+            return RedirectToAction("EditPost", new { Id = post.Id });
+        }
+
+        public ActionResult EditPost(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+                throw new ArgumentNullException("id");
+
+            var post = BlogRepo.Posts.Where(p => p.Title == id).FirstOrDefault();
+
+            if (post == null)
+                return HttpNotFound();
+
+            return View(post);
+        }
     }
 }

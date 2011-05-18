@@ -7,6 +7,10 @@ namespace Rholiver.Site.App_Start
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Web.Mvc;
+    using System.Collections.Generic;
+    using Rholiver.Site.Models;
+    using System;
+    using Rholiver.Site.Infrastructure;
 
     public static class NinjectMVC3 
     {
@@ -47,6 +51,21 @@ namespace Rholiver.Site.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-        }        
+            kernel.Bind<BlogRepository>().ToConstant(new BlogRepository(new List<BlogPost>()
+            {
+                new BlogPost(){
+                    Id = "first-post",
+                    Title = "First post",
+                    Body = "<p>This is my first post!</p>",
+                    CreatedAt = new DateTime(2011, 05, 14, 19, 42, 00)
+                },
+                new BlogPost(){
+                    Id = "second-post",
+                    Title = "Second post",
+                    Body = "<p>This is my second post.</p><p>Lets try <b>styling</b>.</p>",
+                    CreatedAt = new DateTime(2011, 05, 14, 20, 01, 00)
+                }
+            })).InTransientScope();
+        }
     }
 }
