@@ -84,6 +84,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\AuthorizedUserAttribute.cs" />
     <Compile Include="Infrastructure\BlogRepository.cs" />
     <Compile Include="Infrastructure\HtmlExtentions.cs" />
     <Compile Include="Infrastructure\KnockOutJs.cs" />
