@@ -12,7 +12,18 @@
 </head>
 <body>
   <header>
-      <h1>Rholiver.co.uk</h1>
+    <section class="user">
+      @if (User.Identity.IsAuthenticated)
+      { 
+        <p>Logged in as @User.Identity.Name</p>
+        <p>@Html.ActionLink("Log Out", "LogOut", "User")</p>
+      }
+      else
+      {
+        <p>@Html.ActionLink("Log In", "LogIn", "User")</p>
+      }
+    </section>
+    <h1>Rholiver.co.uk</h1>
     <nav>
       <ul>
         <li><a href="@Url.Action("Index", "Home", null)">Home</a></li>
