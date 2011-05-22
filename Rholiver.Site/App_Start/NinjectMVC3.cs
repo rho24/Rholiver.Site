@@ -13,6 +13,7 @@ namespace Rholiver.Site.App_Start
     using Ninject.Web.Mvc;
     using Rholiver.Site.Infrastructure;
     using Rholiver.Site.Models;
+    using DotNetOpenAuth.OpenId.RelyingParty;
 
     public static class NinjectMVC3 
     {
@@ -53,6 +54,11 @@ namespace Rholiver.Site.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            var admin = new User { Id = GetAdminOpenId(), NickName = "Admin" };
+            kernel.Bind<IUserProvider>().ToConstant(new InMemoryUserProvider(new []{admin}));
+
+            kernel.Bind<OpenIdRelyingParty>().ToSelf().InSingletonScope();
+
             kernel.Bind<BlogRepository>().ToConstant(new BlogRepository(new List<BlogPost>()
             {
                 new BlogPost(){
@@ -68,10 +74,6 @@ namespace Rholiver.Site.App_Start
                     CreatedAt = new DateTime(2011, 05, 14, 20, 01, 00)
                 }
             })).InTransientScope();
-
-            var admin = new User { Id = GetAdminOpenId(), NickName = "Admin" };
-
-            kernel.Bind<IUserProvider>().ToConstant(new InMemoryUserProvider(new []{admin}));
 
         }
 

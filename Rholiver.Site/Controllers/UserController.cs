@@ -84,7 +84,7 @@ namespace Rholiver.Site.Controllers
 
                         if (user == null)
                         {
-                            ViewBag.Message = "Id '{0}' not a valid user.".Fmt(response.ClaimedIdentifier);
+                            ViewBag.Message = "Id not recognised";
                             return View("Login");
                         }
 
