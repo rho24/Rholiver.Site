@@ -2,6 +2,9 @@
 [Rr]elease/
 [Bb]in/
 [Oo]bj/
-*.suo
-*.sln.cache
 App_Data/
+*.suo
+*.sln.*
+*.csproj.*
+*.exe.*
+*.user
