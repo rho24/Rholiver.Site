@@ -95,7 +95,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\openid.txt" />
     <Content Include="Content\OpenIdSelector\images\openid-inputicon.gif" />
     <Content Include="Content\OpenIdSelector\images\openid-providers-en.png" />
     <Content Include="Content\OpenIdSelector\images\openid-providers-ru.png" />
