@@ -84,6 +84,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\GeneralExtensions.cs" />
     <Compile Include="Infrastructure\InMemoryUserProvider.cs" />
     <Compile Include="Infrastructure\IUserProvider.cs" />
     <Compile Include="Infrastructure\RequiresAuthorizationAttribute.cs" />
