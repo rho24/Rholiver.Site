@@ -84,14 +84,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\AuthorizedUserAttribute.cs" />
+    <Compile Include="Infrastructure\InMemoryUserProvider.cs" />
+    <Compile Include="Infrastructure\IUserProvider.cs" />
+    <Compile Include="Infrastructure\RequiresAuthorizationAttribute.cs" />
     <Compile Include="Infrastructure\BlogRepository.cs" />
     <Compile Include="Infrastructure\HtmlExtentions.cs" />
     <Compile Include="Infrastructure\KnockOutJs.cs" />
+    <Compile Include="Infrastructure\User.cs" />
     <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\openid.txt" />
     <Content Include="Content\OpenIdSelector\images\openid-inputicon.gif" />
     <Content Include="Content\OpenIdSelector\images\openid-providers-en.png" />
     <Content Include="Content\OpenIdSelector\images\openid-providers-ru.png" />
@@ -193,7 +197,6 @@
   <ItemGroup>
     <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

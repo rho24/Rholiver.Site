@@ -6,7 +6,7 @@ using System.Web;
 namespace Rholiver.Site.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public class AuthorizedUserAttribute : System.Web.Mvc.AuthorizeAttribute
+    public class RequiresAuthorizationAttribute : System.Web.Mvc.AuthorizeAttribute
     {
         protected override void HandleUnauthorizedRequest(System.Web.Mvc.AuthorizationContext filterContext)
         {

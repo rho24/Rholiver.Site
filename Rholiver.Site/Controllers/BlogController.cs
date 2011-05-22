@@ -35,13 +35,13 @@ namespace Rholiver.Site.Controllers
             return View(blog);
         }
 
-        [AuthorizedUser]
+        [RequiresAuthorization]
         public ActionResult CreatePost()
         {
             return View(new BlogPost());
         }
 
-        [HttpPost, AuthorizedUser]
+        [HttpPost, RequiresAuthorization]
         public ActionResult CreatePost(BlogPost post)
         {
             if (post == null)
@@ -60,7 +60,7 @@ namespace Rholiver.Site.Controllers
             return RedirectToAction("EditPost", new { Id = post.Id });
         }
 
-        [AuthorizedUser]
+        [RequiresAuthorization]
         public ActionResult EditPost(string id)
         {
             if (string.IsNullOrWhiteSpace(id))

@@ -8,12 +8,20 @@ using System.Web.Security;
 using DotNetOpenAuth.OpenId;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
+using Rholiver.Site.Infrastructure;
 
 namespace Rholiver.Site.Controllers
 {
     public class UserController : Controller
     {
-        private static OpenIdRelyingParty openid = new OpenIdRelyingParty();
+        public OpenIdRelyingParty OpenIdService { get; set; }
+        private IUserProvider UserProvider { get; set; }
+
+        public UserController(OpenIdRelyingParty openIdService, IUserProvider userProvider)
+        {
+            OpenIdService = openIdService;
+            UserProvider = userProvider;
+        }
 
         public ActionResult Index()
         {
@@ -40,7 +48,7 @@ namespace Rholiver.Site.Controllers
         [ValidateInput(false)]
         public ActionResult Authenticate(string openidIdentifyer, string returnUrl)
         {
-            var response = openid.GetResponse();
+            var response = OpenIdService.GetResponse();
             if (response == null)
             {
                 // Stage 2: user submitting Identifier
@@ -49,24 +57,19 @@ namespace Rholiver.Site.Controllers
                 {
                     try
                     {
-                        var authenticateRequest = openid.CreateRequest(openidIdentifyer);
-                        authenticateRequest.AddExtension(new ClaimsRequest {
-                            FullName = DemandLevel.Require,
-                            Email = DemandLevel.Require,
-                            Nickname = DemandLevel.Require
-                        });
+                        var authenticateRequest = OpenIdService.CreateRequest(openidIdentifyer);
 
                         return authenticateRequest.RedirectingResponse.AsActionResult();
                     }
                     catch (ProtocolException ex)
                     {
-                        ViewData["Message"] = ex.Message;
+                        ViewBag.Message = ex.Message;
                         return View("Login");
                     }
                 }
                 else
                 {
-                    ViewData["Message"] = "Invalid identifier";
+                    ViewBag.Message = "Invalid identifier";
                     return View("Login");
                 }
             }
@@ -77,10 +80,17 @@ namespace Rholiver.Site.Controllers
                 {
                     case AuthenticationStatus.Authenticated:
 
-                        var userInfo = response.GetExtension<ClaimsResponse>();
+                        var user = UserProvider.GetUser(response.ClaimedIdentifier);
 
-                        //Session["FriendlyIdentifier"] = response.FriendlyIdentifierForDisplay;
-                        FormsAuthentication.SetAuthCookie(userInfo.Email, false);
+                        if (user == null)
+                        {
+                            ViewBag.Message = "Id not recognised";
+                            return View("Login");
+                        }
+
+
+
+                        FormsAuthentication.SetAuthCookie(user.NickName, false);
                         if (!string.IsNullOrEmpty(returnUrl))
                         {
                             return Redirect(returnUrl);
@@ -90,10 +100,10 @@ namespace Rholiver.Site.Controllers
                             return RedirectToAction("Index", "Home");
                         }
                     case AuthenticationStatus.Canceled:
-                        ViewData["Message"] = "Canceled at provider";
+                        ViewBag.Message = "Canceled at provider";
                         return View("Login");
                     case AuthenticationStatus.Failed:
-                        ViewData["Message"] = response.Exception.Message;
+                        ViewBag.Message =  response.Exception.Message;
                         return View("Login");
                 }
             }
