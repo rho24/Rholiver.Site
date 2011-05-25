@@ -12,6 +12,7 @@ using Rholiver.Site.Infrastructure;
 
 namespace Rholiver.Site.Controllers
 {
+    [RequireHttps]
     public class UserController : Controller
     {
         public OpenIdRelyingParty OpenIdService { get; set; }

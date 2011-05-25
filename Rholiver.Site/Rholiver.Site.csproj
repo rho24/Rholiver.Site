@@ -87,6 +87,7 @@
     <Compile Include="Infrastructure\GeneralExtensions.cs" />
     <Compile Include="Infrastructure\InMemoryUserProvider.cs" />
     <Compile Include="Infrastructure\IUserProvider.cs" />
+    <Compile Include="Infrastructure\RequireHttpsAttribute.cs" />
     <Compile Include="Infrastructure\RequiresAuthorizationAttribute.cs" />
     <Compile Include="Infrastructure\BlogRepository.cs" />
     <Compile Include="Infrastructure\HtmlExtentions.cs" />
