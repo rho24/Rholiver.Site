@@ -17,7 +17,7 @@ namespace Rholiver.Site.Infrastructure
 
         public User GetUser(string id)
         {
-            return Users.Where(u => u.Id == id).FirstOrDefault();
+            return Users.FirstOrDefault();
         }
     }
 }

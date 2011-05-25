@@ -54,8 +54,7 @@ namespace Rholiver.Site.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            var admin = new User { Id = GetAdminOpenId(), NickName = "Admin" };
-            kernel.Bind<IUserProvider>().ToConstant(new InMemoryUserProvider(new []{admin}));
+            kernel.Bind<IUserProvider>().ToConstant(new InMemoryUserProvider(new[] { new User { Id = GetAdminOpenId(), NickName = "Admin" } }));
 
             kernel.Bind<OpenIdRelyingParty>().ToSelf().InSingletonScope();
 
