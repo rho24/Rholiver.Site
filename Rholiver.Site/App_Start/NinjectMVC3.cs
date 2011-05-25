@@ -79,16 +79,10 @@ namespace Rholiver.Site.App_Start
         static string GetAdminOpenId()
         {
             var openid = ConfigurationManager.AppSettings["openid"];
-            if (!string.IsNullOrWhiteSpace(openid))
-                return openid;
-            else
-            {
-                openid = File.ReadAllText(HostingEnvironment.MapPath("~/App_Data/openid.txt"));
-                if (string.IsNullOrWhiteSpace(openid))
-                    throw new ApplicationException("AdminOpenId is not set.");
+            if (string.IsNullOrWhiteSpace(openid))
+                throw new ApplicationException("No admin id found.");
 
-                return openid;
-            }
+            return openid;
         }
     }
 }

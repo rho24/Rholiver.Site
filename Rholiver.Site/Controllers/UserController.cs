@@ -82,13 +82,11 @@ namespace Rholiver.Site.Controllers
 
                         var user = UserProvider.GetUser(response.ClaimedIdentifier);
 
-                        if (user == user)
+                        if (user == null)
                         {
-                            ViewBag.Message = "Id not recognised '{0}' - '{1}'".Fmt(response.ClaimedIdentifier, UserProvider.GetUser("a").Id);
+                            ViewBag.Message = "Id not recognised";
                             return View("Login");
                         }
-
-
 
                         FormsAuthentication.SetAuthCookie(user.NickName, false);
                         if (!string.IsNullOrEmpty(returnUrl))
