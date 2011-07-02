@@ -7,7 +7,7 @@ namespace Rholiver.Site.Infrastructure
 {
     public class User
     {
-        public string Id { get; set; }
-        public string NickName { get; set; }
+        public virtual string Id { get; set; }
+        public virtual string NickName { get; set; }
     }
 }

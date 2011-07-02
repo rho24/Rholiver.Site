@@ -15,7 +15,7 @@
   <article>
     <header><h3>@Html.ActionLink(post.Title, "Post", new { id = post.Id })</h3></header>
     <section class="body">
-    @post.Body
+    @Html.Raw(post.Body)
     </section>
     <section class="stats">Created at @post.CreatedAt</section>
     @Html.ActionLink("Edit", "EditPost", @post.Id)

@@ -47,7 +47,7 @@ namespace Rholiver.Site.Controllers
             return View(new BlogPost());
         }
 
-        [HttpPost, RequiresAuthorization]
+        [HttpPost, RequiresAuthorization, ValidateInput(false)]
         public ActionResult CreatePost(BlogPost post)
         {
             if (!ModelState.IsValid)

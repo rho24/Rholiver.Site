@@ -8,12 +8,14 @@ namespace Rholiver.Site.Models
 {
     public class BlogPost
     {
-        [Required]
         public virtual string Id { get; set; }
+        
         [Required]
         public virtual string Title { get; set; }
+        
         [Required]
         public virtual string Description { get; set; }
+        
         [Required]
         [DataType(DataType.MultilineText)]
         public virtual string Body { get; set; }
