@@ -23,8 +23,5 @@ namespace Rholiver.Site.Models
         public virtual string CreatedBy { get; set; }
 
         public virtual DateTime CreatedAt { get; set; }
-
-        public virtual DateTime? PublishedAt { get; set; }
-        public virtual bool IsPublished { get { return PublishedAt.HasValue; } }
     }
 }

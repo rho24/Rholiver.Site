@@ -40,30 +40,6 @@
             @Html.ValidationMessageFor(model => model.Body)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreatedBy)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreatedBy)
-            @Html.ValidationMessageFor(model => model.CreatedBy)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CreatedAt)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CreatedAt)
-            @Html.ValidationMessageFor(model => model.CreatedAt)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PublishedAt)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.PublishedAt)
-            @Html.ValidationMessageFor(model => model.PublishedAt)
-        </div>
-
         <p>
             <input type="submit" value="Save" />
         </p>

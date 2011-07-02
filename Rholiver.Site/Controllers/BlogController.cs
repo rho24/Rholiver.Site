@@ -23,7 +23,8 @@ namespace Rholiver.Site.Controllers
         {
             using (var session = PocoDb.BeginSession())
             {
-                var posts = session.Get<BlogPost>().ToList();
+                //TODO: needs server side ordering.
+                var posts = session.Get<BlogPost>().ToList().OrderByDescending(p => p.CreatedAt);
                 return View(posts);
             }
         }
@@ -56,16 +57,21 @@ namespace Rholiver.Site.Controllers
             using (var session = PocoDb.BeginWritableSession())
             {
                 if (session.Get<BlogPost>().Where(p => p.Title == post.Title).FirstOrDefault() != null)
+                {
                     ModelState.AddModelError("Title", "Title is not unique");
+                    return View(post);
+                }
 
                 post.Id = post.Title.Replace(" ", "-");
+                post.CreatedAt = DateTime.Now;
+                post.CreatedBy = User.Identity.Name;
 
                 session.Add(post);
 
                 session.SaveChanges();
             }
             
-            return RedirectToAction("EditPost", new {Id = post.Id});
+            return RedirectToAction("Index");
         }
 
         [RequiresAuthorization]
