@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Rholiver.Site.Controllers
@@ -11,8 +8,7 @@ namespace Rholiver.Site.Controllers
         //
         // GET: /Home/
 
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             return View();
         }
 
@@ -20,10 +16,8 @@ namespace Rholiver.Site.Controllers
         //
         // GET: /About/
 
-        public ActionResult About()
-        {
+        public ActionResult About() {
             return View();
         }
-
     }
 }

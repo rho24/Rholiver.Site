@@ -11,28 +11,23 @@ namespace Rholiver.Site.Controllers
     {
         public PocoDbClient PocoDb { get; private set; }
 
-        public BlogController(PocoDbClient pocoDb)
-        {
+        public BlogController(PocoDbClient pocoDb) {
             PocoDb = pocoDb;
         }
 
         //
         // GET: /Blog/
 
-        public ActionResult Index()
-        {
-            using (var session = PocoDb.BeginSession())
-            {
+        public ActionResult Index() {
+            using (var session = PocoDb.BeginSession()) {
                 //TODO: needs server side ordering.
                 var posts = session.Get<BlogPost>().ToList().OrderByDescending(p => p.CreatedAt);
                 return View(posts);
             }
         }
 
-        public ActionResult Post(string id)
-        {
-            using (var session = PocoDb.BeginSession())
-            {
+        public ActionResult Post(string id) {
+            using (var session = PocoDb.BeginSession()) {
                 var post = session.Get<BlogPost>().Where(p => p.Id == id).FirstOrDefault();
 
                 if (post == null)
@@ -43,21 +38,17 @@ namespace Rholiver.Site.Controllers
         }
 
         [RequiresAuthorization]
-        public ActionResult CreatePost()
-        {
+        public ActionResult CreatePost() {
             return View(new BlogPost());
         }
 
         [HttpPost, RequiresAuthorization, ValidateInput(false)]
-        public ActionResult CreatePost(BlogPost post)
-        {
+        public ActionResult CreatePost(BlogPost post) {
             if (!ModelState.IsValid)
                 return View(post);
 
-            using (var session = PocoDb.BeginWritableSession())
-            {
-                if (session.Get<BlogPost>().Where(p => p.Title == post.Title).FirstOrDefault() != null)
-                {
+            using (var session = PocoDb.BeginWritableSession()) {
+                if (session.Get<BlogPost>().Where(p => p.Title == post.Title).FirstOrDefault() != null) {
                     ModelState.AddModelError("Title", "Title is not unique");
                     return View(post);
                 }
@@ -70,15 +61,13 @@ namespace Rholiver.Site.Controllers
 
                 session.SaveChanges();
             }
-            
+
             return RedirectToAction("Index");
         }
 
         [RequiresAuthorization]
-        public ActionResult EditPost(string id)
-        {
-            using (var session = PocoDb.BeginSession())
-            {
+        public ActionResult EditPost(string id) {
+            using (var session = PocoDb.BeginSession()) {
                 var post = session.Get<BlogPost>().Where(p => p.Id == id).FirstOrDefault();
 
                 if (post == null)

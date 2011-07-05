@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Rholiver.Site.Models.BlogPost>
+﻿@using System
+@model IEnumerable<Rholiver.Site.Models.BlogPost>
 
 @{
     ViewBag.Title = "Blog";
@@ -10,15 +11,14 @@
 <p>@Html.ActionLink("Add new post", "CreatePost")</p>
 
 <section class="blog">
-@foreach (var post in Model)
-{
-  <article>
-    <header><h3>@Html.ActionLink(post.Title, "Post", new { id = post.Id })</h3></header>
-    <section class="body">
-    @Html.Raw(post.Body)
-    </section>
-    <section class="stats">Created at @post.CreatedAt</section>
-    @Html.ActionLink("Edit", "EditPost", @post.Id)
-  </article>
-}
+    @foreach (var post in Model) {
+                                     <article>
+                                         <header><h3>@Html.ActionLink(post.Title, "Post", new {id = post.Id})</h3></header>
+                                         <section class="body">
+                                             @Html.Raw(post.Body)
+                                         </section>
+                                         <section class="stats">Created at @post.CreatedAt</section>
+                                         @Html.ActionLink("Edit", "EditPost", @post.Id)
+                                     </article>
+    }
 </section>

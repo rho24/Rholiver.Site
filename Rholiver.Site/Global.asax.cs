@@ -15,13 +15,11 @@ namespace Rholiver.Site
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
-        {
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters) {
             filters.Add(new HandleErrorAttribute());
         }
 
-        public static void RegisterRoutes(RouteCollection routes)
-        {
+        public static void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
@@ -31,8 +29,7 @@ namespace Rholiver.Site
                 );
         }
 
-        protected void Application_Start()
-        {
+        protected void Application_Start() {
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
@@ -41,27 +38,21 @@ namespace Rholiver.Site
             InitiateDbIfNotExists();
         }
 
-        static void InitiateDbIfNotExists()
-        {
+        static void InitiateDbIfNotExists() {
             var connectionFactory = DependencyResolver.Current.GetService<IDbConnectionFactory>();
 
-            using (var connection = connectionFactory.CreateOpenConnection())
-            {
-                using (var command = connection.CreateCommand())
-                {
+            using (var connection = connectionFactory.CreateOpenConnection()) {
+                using (var command = connection.CreateCommand()) {
                     command.CommandText = @"Select * from sys.tables where name = 'SqlCommits'";
 
-                    using (var result = command.ExecuteReader())
-                    {
+                    using (var result = command.ExecuteReader()) {
                         if (result.Read())
                             return;
                     }
                 }
 
-                using (var trans = connection.BeginTransaction(IsolationLevel.Serializable))
-                {
-                    using (var command = connection.CreateCommand())
-                    {
+                using (var trans = connection.BeginTransaction(IsolationLevel.Serializable)) {
+                    using (var command = connection.CreateCommand()) {
                         command.Transaction = trans;
                         command.CommandText =
                             @"CREATE TABLE [SqlCommits] ([Id] nvarchar(128) NOT NULL, [Value] nvarchar(MAX) NOT NULL);";
@@ -69,8 +60,7 @@ namespace Rholiver.Site
                         if (command.ExecuteNonQuery() == 0)
                             throw new InvalidOperationException("Failed to build db");
                     }
-                    using (var command = connection.CreateCommand())
-                    {
+                    using (var command = connection.CreateCommand()) {
                         command.Transaction = trans;
                         command.CommandText =
                             @"ALTER TABLE [SqlCommits] ADD CONSTRAINT [PK__SqlCommits__Id] PRIMARY KEY ([Id]);";
@@ -78,8 +68,7 @@ namespace Rholiver.Site
                         if (command.ExecuteNonQuery() == 0)
                             throw new InvalidOperationException("Failed to build db");
                     }
-                    using (var command = connection.CreateCommand())
-                    {
+                    using (var command = connection.CreateCommand()) {
                         command.Transaction = trans;
                         command.CommandText =
                             @"CREATE UNIQUE INDEX [UQ__SqlCommits__Id] ON [SqlCommits] ([Id] ASC);";
@@ -95,36 +84,31 @@ namespace Rholiver.Site
             InitialiseData();
         }
 
-        static void InitialiseData()
-        {
+        static void InitialiseData() {
             var pocoDb = DependencyResolver.Current.GetService<PocoDbClient>();
 
-            using (var session = pocoDb.BeginWritableSession())
-            {
+            using (var session = pocoDb.BeginWritableSession()) {
                 session.Add(new User {Id = GetAdminOpenId(), NickName = "Admin"});
 
-                session.Add(new BlogPost()
-                                {
-                                    Id = "first-post",
-                                    Title = "First post",
-                                    Body = "<p>This is my first post!</p>",
-                                    CreatedAt = new DateTime(2011, 05, 14, 19, 42, 00)
-                                });
+                session.Add(new BlogPost() {
+                                               Id = "first-post",
+                                               Title = "First post",
+                                               Body = "<p>This is my first post!</p>",
+                                               CreatedAt = new DateTime(2011, 05, 14, 19, 42, 00)
+                                           });
 
-                session.Add(new BlogPost()
-                                {
-                                    Id = "second-post",
-                                    Title = "Second post",
-                                    Body = "<p>This is my second post.</p><p>Lets try <b>styling</b>.</p>",
-                                    CreatedAt = new DateTime(2011, 05, 14, 20, 01, 00)
-                                });
+                session.Add(new BlogPost() {
+                                               Id = "second-post",
+                                               Title = "Second post",
+                                               Body = "<p>This is my second post.</p><p>Lets try <b>styling</b>.</p>",
+                                               CreatedAt = new DateTime(2011, 05, 14, 20, 01, 00)
+                                           });
 
                 session.SaveChanges();
             }
         }
 
-        static string GetAdminOpenId()
-        {
+        static string GetAdminOpenId() {
             var openid = ConfigurationManager.AppSettings["openid"];
             if (string.IsNullOrWhiteSpace(openid))
                 throw new ApplicationException("No admin id found.");

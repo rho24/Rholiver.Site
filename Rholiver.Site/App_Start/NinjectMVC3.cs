@@ -20,8 +20,7 @@ namespace Rholiver.Site.App_Start
         /// <summary>
         /// Starts the application
         /// </summary>
-        public static void Start()
-        {
+        public static void Start() {
             DynamicModuleUtility.RegisterModule(typeof (OnePerRequestModule));
             DynamicModuleUtility.RegisterModule(typeof (HttpApplicationInitializationModule));
             bootstrapper.Initialize(CreateKernel);
@@ -30,8 +29,7 @@ namespace Rholiver.Site.App_Start
         /// <summary>
         /// Stops the application.
         /// </summary>
-        public static void Stop()
-        {
+        public static void Stop() {
             bootstrapper.ShutDown();
         }
 
@@ -39,8 +37,7 @@ namespace Rholiver.Site.App_Start
         /// Creates the kernel that will manage your application.
         /// </summary>
         /// <returns>The created kernel.</returns>
-        static IKernel CreateKernel()
-        {
+        static IKernel CreateKernel() {
             var kernel = new StandardKernel();
             RegisterServices(kernel);
             return kernel;
@@ -50,8 +47,7 @@ namespace Rholiver.Site.App_Start
         /// Load your modules or register your services here!
         /// </summary>
         /// <param name="kernel">The kernel.</param>
-        static void RegisterServices(IKernel kernel)
-        {
+        static void RegisterServices(IKernel kernel) {
             var connectionString = ConfigurationManager.ConnectionStrings["pocodb"].ConnectionString;
 
             kernel.Bind<IDbConnectionFactory>().ToConstant(new SqlServerConnectionFactory(connectionString));
