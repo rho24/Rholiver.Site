@@ -131,6 +131,7 @@
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Mvc.css" />
+    <Content Include="robots.txt" />
     <Content Include="Scripts\google-analytics.js" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
