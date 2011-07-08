@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Data;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Glimpse.Core.Configuration;
 using PocoDb;
 using PocoDb.Persistence.SqlServer;
 using Rholiver.Site.Infrastructure;
@@ -15,6 +16,8 @@ namespace Rholiver.Site
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        public string LocalIp;
+
         public static void RegisterGlobalFilters(GlobalFilterCollection filters) {
             filters.Add(new HandleErrorAttribute());
         }
@@ -34,6 +37,22 @@ namespace Rholiver.Site
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+                        LocalIp = ConfigurationManager.AppSettings["LocalIp"];
+
+            var glimpseConfiguration = new GlimpseConfiguration();
+            glimpseConfiguration.Enabled = true;
+            glimpseConfiguration.IpAddresses.Add(new IpAddress {Address = "127.0.0.1"});
+            glimpseConfiguration.IpAddresses.Add(new IpAddress {Address = "::1"});
+            glimpseConfiguration.ContentTypes.Add(new ContentType() {Content = "text/html"});
+            glimpseConfiguration.ContentTypes.Add(new ContentType() {Content = "application/json"});
+
+            if (LocalIp != null)
+                glimpseConfiguration.IpAddresses.Add(new IpAddress {Address = LocalIp});
+
+            Glimpse.Core.Module.Configuration = glimpseConfiguration;
+
+            Glimpse.Core.Module.ConstructDependencies();
 
             InitiateDbIfNotExists();
         }
