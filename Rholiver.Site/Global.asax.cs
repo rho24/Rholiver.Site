@@ -38,8 +38,13 @@ namespace Rholiver.Site
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-                        LocalIp = ConfigurationManager.AppSettings["LocalIp"];
+            LocalIp = ConfigurationManager.AppSettings["LocalIp"];
 
+            InitiateGlimpse();
+            
+            InitiateDbIfNotExists();
+        }
+        void InitiateGlimpse() {
             var glimpseConfiguration = new GlimpseConfiguration();
             glimpseConfiguration.Enabled = true;
             glimpseConfiguration.IpAddresses.Add(new IpAddress {Address = "127.0.0.1"});
@@ -53,8 +58,6 @@ namespace Rholiver.Site
             Glimpse.Core.Module.Configuration = glimpseConfiguration;
 
             Glimpse.Core.Module.ConstructDependencies();
-
-            InitiateDbIfNotExists();
         }
 
         static void InitiateDbIfNotExists() {
