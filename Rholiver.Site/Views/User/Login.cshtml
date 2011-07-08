@@ -26,6 +26,7 @@
   
     <form action="@Url.Action("Authenticate", "User")" method="get" id="openid_form">
         <input type="hidden" name="action" value="verify" />
+        @Html.Hidden("returnUrl", (object)ViewBag.ReturnUrl)
         <fieldset>
             <legend>Sign-in or Create New Account</legend>
             <div id="openid_choice">

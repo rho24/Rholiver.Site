@@ -19,21 +19,14 @@ namespace Rholiver.Site.Controllers
             UserProvider = userProvider;
         }
 
-        public ActionResult Index() {
-            if (!User.Identity.IsAuthenticated) {
-                Response.Redirect("/User/Login?ReturnUrl=Index");
-            }
-
-            return View("Index");
-        }
-
         public ActionResult Logout() {
             FormsAuthentication.SignOut();
             return Redirect("/");
         }
 
-        public ActionResult Login() {
+        public ActionResult Login(string returnUrl) {
             // Stage 1: display login form to user
+            ViewBag.ReturnUrl = returnUrl;
             return View("Login");
         }
 
