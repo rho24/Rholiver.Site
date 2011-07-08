@@ -107,6 +107,7 @@
   <ItemGroup>
     <Content Include="App_Readme\glimpse.mvc3.readme.txt" />
     <Content Include="App_Readme\glimpse.readme.txt" />
+    <Content Include="Content\favicon.png" />
     <Content Include="Content\OpenIdSelector\images\openid-inputicon.gif" />
     <Content Include="Content\OpenIdSelector\images\openid-providers-en.png" />
     <Content Include="Content\OpenIdSelector\images\openid-providers-ru.png" />
