@@ -20,19 +20,22 @@
         <header>
             <section class="user">
                 @if (User.Identity.IsAuthenticated) {
-                                                        <p>Logged in as @User.Identity.Name</p>
-                                                        <p>@Html.ActionLink("Log Out", "LogOut", "User")</p>
+                  <p>Logged in as @User.Identity.Name</p>
+                  <p>@Html.ActionLink("Log Out", "LogOut", "User")</p>
                 }
                 else {
-                         <p>@Html.ActionLink("Log In", "LogIn", "User")</p>
+                  <p>@Html.ActionLink("Log In", "LogIn", "User")</p>
                 }
             </section>
             <h1>Rholiver.co.uk</h1>
             <nav>
                 <ul>
-                    <li><a href="@Url.Action("Index", "Home", null)">Home</a></li>
-                    <li><a href="@Url.Action("Index", "Blog", null)">Blog</a></li>
-                    <li><a href="@Url.Action("About", "Home", null)">About</a></li>
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Blog", "Index", "Blog")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    @if (User.Identity.IsAuthenticated) {
+                       <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
+                    }
                 </ul>
             </nav>
         </header>
