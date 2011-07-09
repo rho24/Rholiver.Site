@@ -34,6 +34,9 @@
                     <li>@Html.ActionLink("Blog", "Index", "Blog")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     @if (User.Identity.IsAuthenticated) {
+                       <li><a href="http://mail.rholiver.co.uk">Mail</a></li>
+                       <li><a href="http://calendar.rholiver.co.uk">Calendar</a></li>
+                       <li><a href="http://docs.rholiver.co.uk">Docs</a></li>
                        <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
                     }
                 </ul>
