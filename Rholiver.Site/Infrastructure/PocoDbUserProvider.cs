@@ -14,7 +14,7 @@ namespace Rholiver.Site.Infrastructure
 
         public User GetUser(string id) {
             using (var session = _pocoDb.BeginSession()) {
-                return session.Get<User>().FirstOrDefault();
+                return session.Get<User>().Where(u => u.Id == id).FirstOrDefault();
             }
         }
     }

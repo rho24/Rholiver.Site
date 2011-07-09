@@ -21,6 +21,7 @@ namespace Rholiver.Site.Controllers
 
         public ActionResult Logout() {
             FormsAuthentication.SignOut();
+            Session.Remove("OPENID_CLAIMED_ID");
             return Redirect("/");
         }
 
@@ -56,7 +57,7 @@ namespace Rholiver.Site.Controllers
                 // Stage 3: OpenID Provider sending assertion response
                 switch (response.Status) {
                     case AuthenticationStatus.Authenticated:
-
+                        Session["OPENID_CLAIMED_ID"] = "OpenID claimed identifyer '{0}'".Fmt(response.ClaimedIdentifier);
                         var user = UserProvider.GetUser(response.ClaimedIdentifier);
 
                         if (user == null) {
