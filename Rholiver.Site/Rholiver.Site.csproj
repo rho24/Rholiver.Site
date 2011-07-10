@@ -96,6 +96,7 @@
     <Compile Include="Infrastructure\GeneralExtensions.cs" />
     <Compile Include="Infrastructure\IUserProvider.cs" />
     <Compile Include="Infrastructure\PocoDbUserProvider.cs" />
+    <Compile Include="Infrastructure\RequestExtensions.cs" />
     <Compile Include="Infrastructure\RequireHttpsAttribute.cs" />
     <Compile Include="Infrastructure\RequireHttpsWhenLoggedOnAttribute.cs" />
     <Compile Include="Infrastructure\RequiresAuthorizationAttribute.cs" />
