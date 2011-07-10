@@ -12,6 +12,11 @@ namespace Rholiver.Site.Infrastructure
                 throw new ArgumentNullException("filterContext");
             }
 
+            if (filterContext.ActionDescriptor.GetCustomAttributes(typeof (RequireHttpsAttribute), true).Length != 0 ||
+                filterContext.ActionDescriptor.ControllerDescriptor.GetCustomAttributes(typeof (RequireHttpsAttribute),
+                                                                                        true).Length != 0)
+                return;
+
             if (filterContext.HttpContext.User.Identity.IsAuthenticated) {
                 if (filterContext.HttpContext.Request.SafeIsSecureConnection())
                     return;
