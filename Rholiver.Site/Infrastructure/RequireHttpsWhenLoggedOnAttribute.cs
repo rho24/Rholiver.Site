@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Web.Mvc;
 using RequireHttpsAttributeBase = System.Web.Mvc.RequireHttpsAttribute;
 
@@ -11,8 +12,9 @@ namespace Rholiver.Site.Infrastructure
             if (filterContext == null) {
                 throw new ArgumentNullException("filterContext");
             }
-
+            Trace.TraceInformation("RequireHttpsWhenLoggedOnAttribute.OnAuthorization()");
             if (filterContext.HttpContext.User.Identity.IsAuthenticated) {
+                Trace.TraceInformation("Authenticated");
                 if (filterContext.HttpContext.Request.IsSecureConnection) {
                     return;
                 }
@@ -30,13 +32,16 @@ namespace Rholiver.Site.Infrastructure
                 HandleNonHttpsRequest(filterContext);
             }
             else {
+                Trace.TraceInformation("Not authenticated");
                 if (!filterContext.HttpContext.Request.IsSecureConnection) {
+                    Trace.TraceInformation("Not secure connection");
                     return;
                 }
 
                 if (string.Equals(filterContext.HttpContext.Request.Headers["X-Forwarded-Proto"],
                                   "http",
                                   StringComparison.InvariantCultureIgnoreCase)) {
+                    Trace.TraceInformation("X-Forwarded-Proto = http");
                     return;
                 }
 
@@ -45,8 +50,10 @@ namespace Rholiver.Site.Infrastructure
         }
 
         void RedirectToHttp(AuthorizationContext filterContext) {
+            Trace.TraceInformation("RedirectToHttp");
             var url = filterContext.HttpContext.Request.Url;
             var newUrl = "http://{0}{1}{2}".Fmt(url.Host,url.IsDefaultPort ? "": ":" + url.Port, filterContext.HttpContext.Request.RawUrl);
+            Trace.TraceInformation("New url = '{0}'", newUrl);
             filterContext.Result = new RedirectResult(newUrl);
         }
     }
