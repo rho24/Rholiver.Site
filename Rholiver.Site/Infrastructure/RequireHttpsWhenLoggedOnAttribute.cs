@@ -45,8 +45,9 @@ namespace Rholiver.Site.Infrastructure
         }
 
         void RedirectToHttp(AuthorizationContext filterContext) {
-            var url = "http://" + filterContext.HttpContext.Request.Url.Host + filterContext.HttpContext.Request.RawUrl;
-            filterContext.Result = new RedirectResult(url);
+            var url = filterContext.HttpContext.Request.Url;
+            var newUrl = "http://{0}{1}{2}".Fmt(url.Host,url.IsDefaultPort ? "": ":" + url.Port, filterContext.HttpContext.Request.RawUrl);
+            filterContext.Result = new RedirectResult(newUrl);
         }
     }
 }
