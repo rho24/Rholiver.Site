@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="msvalidate.01" content="FB368A60C2A99E91BF11A8167DEFD444" />
-        <title>rholiver.co.uk@(!string.IsNullOrWhiteSpace(@ViewBag.Title) ? " - " + @ViewBag.Title : "")</title>
+        <title>@if (Request.Url.Host == "localhost"){<text>DEV -</text>} rholiver.co.uk@(!string.IsNullOrWhiteSpace(@ViewBag.Title) ? " - " + @ViewBag.Title : "")</title>
         
         <link rel="icon" type="image/png"  href="/Content/favicon.png" />
         <link href="@Url.Content("~/Content/Mvc.css")" rel="stylesheet" type="text/css" />
@@ -26,7 +26,7 @@
                   <p>@Html.ActionLink("Log In", "LogIn", "User")</p>
                 }
             </section>
-            <h1>Rholiver.co.uk</h1>
+            <h1>@if (Request.Url.Host == "localhost"){<text>DEV -</text>} Rholiver.co.uk</h1>
             <nav>
                 <ul>
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
