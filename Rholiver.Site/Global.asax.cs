@@ -20,6 +20,7 @@ namespace Rholiver.Site
 
         public static void RegisterGlobalFilters(GlobalFilterCollection filters) {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new RequireHttpsWhenLoggedOnAttribute());
         }
 
         public static void RegisterRoutes(RouteCollection routes) {

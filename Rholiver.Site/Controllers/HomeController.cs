@@ -14,7 +14,7 @@ namespace Rholiver.Site.Controllers
             return View();
         }
         
-        [RequiresAuthorization, RequireHttps]
+        [RequiresAuthorization]
         public ActionResult DashBoard() {
             return View();
         }
