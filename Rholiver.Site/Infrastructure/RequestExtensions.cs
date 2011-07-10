@@ -21,8 +21,6 @@ namespace Rholiver.Site.Infrastructure
             var cleanUrl = request.Url.GetComponents(UriComponents.AbsoluteUri & ~UriComponents.Port,
                                                      UriFormat.UriEscaped);
 
-            Trace.TraceInformation("SafeUrl - clean url '{0}'", cleanUrl);
-
             return new Uri(cleanUrl);
         }
     }
