@@ -22,7 +22,8 @@ namespace Rholiver.Site.Controllers
         public ActionResult Logout() {
             FormsAuthentication.SignOut();
             Session.Remove("OPENID_CLAIMED_ID");
-            return Redirect("/");
+            var urlHelper = new UrlHelper(ControllerContext.RequestContext);
+            return Redirect(urlHelper.Action("Index", "Home", null, "http"));
         }
 
         public ActionResult Login(string returnUrl) {
