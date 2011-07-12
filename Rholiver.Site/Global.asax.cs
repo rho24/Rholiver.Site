@@ -9,6 +9,7 @@ using PocoDb;
 using PocoDb.Persistence.SqlServer;
 using Rholiver.Site.Infrastructure;
 using Rholiver.Site.Models;
+using HandleErrorAttribute = Rholiver.Site.Infrastructure.HandleErrorAttribute;
 
 namespace Rholiver.Site
 {

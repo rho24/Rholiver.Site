@@ -97,6 +97,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\GeneralExtensions.cs" />
+    <Compile Include="Infrastructure\HandleErrorAttribute.cs" />
     <Compile Include="Infrastructure\IUserProvider.cs" />
     <Compile Include="Infrastructure\PocoDbUserProvider.cs" />
     <Compile Include="Infrastructure\RequestExtensions.cs" />
