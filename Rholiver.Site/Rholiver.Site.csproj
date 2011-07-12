@@ -96,6 +96,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\CloneInjection.cs" />
     <Compile Include="Infrastructure\GeneralExtensions.cs" />
     <Compile Include="Infrastructure\HandleErrorAttribute.cs" />
     <Compile Include="Infrastructure\IUserProvider.cs" />
