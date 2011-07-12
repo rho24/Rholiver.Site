@@ -8,7 +8,6 @@ namespace Rholiver.Site.Models
         public virtual ICollection<UpTime> Uptimes { get; set; }
 
         public SiteStats() {
-            Uptimes = new List<UpTime>();
         }
     }
 

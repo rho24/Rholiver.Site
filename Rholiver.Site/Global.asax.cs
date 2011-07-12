@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
@@ -126,7 +127,7 @@ namespace Rholiver.Site
             var pocoDb = DependencyResolver.Current.GetService<PocoDbClient>();
 
             using (var session = pocoDb.BeginWritableSession()) {
-                session.Add(new SiteStats());
+                session.Add(new SiteStats {Uptimes = new List<UpTime>()});
                 session.Add(new User {Id = GetAdminOpenId(), NickName = "Admin"});
 
                 session.Add(new BlogPost() {
