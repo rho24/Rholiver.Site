@@ -107,6 +107,7 @@
     <Compile Include="Infrastructure\KnockOutJs.cs" />
     <Compile Include="Infrastructure\User.cs" />
     <Compile Include="Models\BlogPost.cs" />
+    <Compile Include="Models\SiteStats.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Rholiver.Site
+@using Rholiver.Site.Models
+@model SiteStats
+@{
     ViewBag.Title = "DashBoard";
 }
 
@@ -10,4 +13,11 @@
   <li><a href="https://www.google.com/analytics/web/">Google Analytics</a></li>
   <li><a href="https://www.google.com/webmasters/tools/home?hl=en&siteUrl=http://rholiver.co.uk/">Google Webmaster</a></li>
   <li><a href="http://www.bing.com/webmaster/Dashboard/Dashboard/?url=http://rholiver.co.uk/">Bing Webmaster</a></li>
+</ul>
+
+<ul>
+<p>Start time - @MvcApplication.StartTime</p>
+@foreach (var uptime in Model.Uptimes) {
+  <li>@uptime.Start<text> - </text>@uptime.Finish</li>
+}
 </ul>

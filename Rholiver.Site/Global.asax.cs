@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Data;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Glimpse.Core.Configuration;
@@ -17,6 +18,7 @@ namespace Rholiver.Site
     public class MvcApplication : System.Web.HttpApplication
     {
         public string LocalIp;
+        public static DateTime StartTime;
 
         public static void RegisterGlobalFilters(GlobalFilterCollection filters) {
             filters.Add(new HandleErrorAttribute());
@@ -33,7 +35,18 @@ namespace Rholiver.Site
                 );
         }
 
+        protected void Application_End() {
+            var pocoDb = DependencyResolver.Current.GetService<PocoDbClient>();
+            using (var session = pocoDb.BeginWritableSession()) {
+                var stats = session.GetWritable<SiteStats>().FirstOrDefault();
+                stats.Uptimes.Add(new UpTime {Start = StartTime, Finish = DateTime.Now});
+                session.SaveChanges();
+            }
+        }
+
         protected void Application_Start() {
+            StartTime = DateTime.Now;
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
@@ -42,9 +55,10 @@ namespace Rholiver.Site
             LocalIp = ConfigurationManager.AppSettings["LocalIp"];
 
             InitiateGlimpse();
-            
+
             InitiateDbIfNotExists();
         }
+
         void InitiateGlimpse() {
             var glimpseConfiguration = new GlimpseConfiguration();
             glimpseConfiguration.Enabled = true;
@@ -111,6 +125,7 @@ namespace Rholiver.Site
             var pocoDb = DependencyResolver.Current.GetService<PocoDbClient>();
 
             using (var session = pocoDb.BeginWritableSession()) {
+                session.Add(new SiteStats());
                 session.Add(new User {Id = GetAdminOpenId(), NickName = "Admin"});
 
                 session.Add(new BlogPost() {
