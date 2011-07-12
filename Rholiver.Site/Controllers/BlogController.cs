@@ -21,14 +21,14 @@ namespace Rholiver.Site.Controllers
         public ActionResult Index() {
             using (var session = PocoDb.BeginSession()) {
                 //TODO: needs server side ordering.
-                var posts = session.Get<BlogPost>().ToList().OrderByDescending(p => p.CreatedAt);
+                var posts = session.Get<BlogPost>().ToList().OrderByDescending(p => p.CreatedAt).MapToPocos();
                 return View(posts);
             }
         }
 
         public ActionResult Post(string id) {
             using (var session = PocoDb.BeginSession()) {
-                var post = session.Get<BlogPost>().Where(p => p.Id == id).FirstOrDefault();
+                var post = session.Get<BlogPost>().Where(p => p.Id == id).MapToPocos().FirstOrDefault();
 
                 if (post == null)
                     return new HttpNotFoundResult();
