@@ -28,7 +28,7 @@ namespace Rholiver.Site.Controllers
 
         public ActionResult Post(string id) {
             using (var session = PocoDb.BeginSession()) {
-                var post = session.Get<BlogPost>().Where(p => p.Id == id).MapToPocos().FirstOrDefault();
+                var post = session.Get<BlogPost>().Where(p => p.Id == id).MapToPocos().SingleOrDefault();
 
                 if (post == null)
                     return new HttpNotFoundResult();
@@ -48,7 +48,7 @@ namespace Rholiver.Site.Controllers
                 return View(post);
 
             using (var session = PocoDb.BeginWritableSession()) {
-                if (session.Get<BlogPost>().Where(p => p.Title == post.Title).FirstOrDefault() != null) {
+                if (session.Get<BlogPost>().Where(p => p.Title == post.Title).SingleOrDefault() != null) {
                     ModelState.AddModelError("Title", "Title is not unique");
                     return View(post);
                 }
@@ -68,7 +68,7 @@ namespace Rholiver.Site.Controllers
         [RequiresAuthorization]
         public ActionResult EditPost(string id) {
             using (var session = PocoDb.BeginSession()) {
-                var post = session.Get<BlogPost>().Where(p => p.Id == id).FirstOrDefault();
+                var post = session.Get<BlogPost>().Where(p => p.Id == id).SingleOrDefault();
 
                 if (post == null)
                     return new HttpNotFoundResult();

@@ -40,7 +40,7 @@ namespace Rholiver.Site
         protected void Application_End() {
             var pocoDb = DependencyResolver.Current.GetService<PocoDbClient>();
             using (var session = pocoDb.BeginWritableSession()) {
-                var stats = session.GetWritable<SiteStats>().FirstOrDefault();
+                var stats = session.GetWritable<SiteStats>().Single();
                 stats.Uptimes.Add(new UpTime {Start = StartTime, Finish = DateTime.Now});
                 session.SaveChanges();
             }
